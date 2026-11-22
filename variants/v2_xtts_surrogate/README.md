@@ -1,4 +1,4 @@
-# v2 — XTTS-v2를 대리 모델로 (진행 중)
+# v2 — XTTS-v2를 대리 모델로
 
 원본 Enkidu는 ECAPA 임베딩을 흔들도록 패치를 학습한다. v2는 실제 공격에 쓰는 XTTS-v2가 참조 음성에서 뽑는 두 값을 직접 흔든다.
 
@@ -14,6 +14,8 @@
 ## 파일
 
 - `xtts_ufp.py` — `mode`: `train`(화자별 패치 학습), `screen`(원본 패치와 크기별 비교), `save`(보호본 저장). `xtts` conda 환경에서 `conda run`으로 실행.
-- `v2_xtts_surrogate.ipynb` — 환경 준비부터 저장까지.
+- `01_protect_v2.ipynb` — 보호: 환경 준비, 학습, 걸러보기, scale 9 보호본 저장
+- `02_purify_v2.ipynb` — 정화: `surrogate_exp/xtts/D2_c9` → `D3_c9`
+- `03_clone_v2.ipynb` — 복제·채점: `runs/enkidu_xtts_c9/` (C1·C4는 v0 것 재사용)
 
 출력: `xtts_exp/surrogate_exp/xtts/`

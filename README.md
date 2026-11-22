@@ -23,7 +23,8 @@ D1 ─► De-AntiFake ─► D4 정화만(대조군) ► XTTS-v2 ─► C4 ┘
 |---|---|---|---|
 | **v0** 원본 Enkidu | — | 완료 | 정화 후 잔존 C4−C3 = 0.265 (ECAPA), STOI 0.68 |
 | **v1** 청각 마스킹 배치 | 빈·프레임별 상한 κ·√θ(f,t)로 섭동을 자름. 학습 단계에도 적용 | 완료 | STOI 0.87로 개선, 잔존 0.011 (p=0.48) → **trade-off 못 벗어남** |
-| **v2** XTTS 대리 모델 | ECAPA 대신 XTTS-v2의 화자 임베딩·GPT 조건값을 흔들도록 학습 | 진행 중 | — |
+| **v2** XTTS 대리 모델 | ECAPA 대신 XTTS-v2의 화자 임베딩·GPT 조건값을 흔들도록 학습 | 완료 | 같은 STOI에서 보호 효과 2배(대조군 대비), 정화 후 잔존 0 |
+| **대조군** | 원본 패치를 크기만 0.25배 (STOI 0.873) | 완료 | 정화 후 잔존 0 → 원인은 **섭동 크기** |
 
 자세한 수치는 [`results/README.md`](results/README.md).
 
@@ -36,7 +37,8 @@ notebooks/
   03_clone_xtts.ipynb           D1~D4 → C1~C4, ECAPA·Resemblyzer 채점, EER, 쌍체 분석
 variants/
   v1_masking/                   01_protect_v1 · 02_purify_v1 · 03_clone_v1 + 마스킹 모듈
-  v2_xtts_surrogate/            XTTS 대리 모델 학습 스크립트와 보호 노트북 (정화·복제는 결과 후 추가)
+  v2_xtts_surrogate/            01_protect_v2 · 02_purify_v2 · 03_clone_v2 + xtts_ufp.py
+  ctrl_uniform/                 01_protect_ctrl · 02_purify_ctrl · 03_clone_ctrl (대조군)
 results/README.md               전체 결과표와 코드 분석에서 발견한 점
 ```
 
@@ -50,7 +52,7 @@ xtts_exp/
   D2/ D3/ D4_new/                                      v0 산출물
   runs/run1/enkidu_ufp/<화자>.pt                       v0 패치
   runs/<RUN_NAME>/                                     복제본·채점 결과
-  mask_exp/   surrogate_exp/                           v1, v2 산출물
+  mask_exp/   surrogate_exp/   ctrl_exp/               v1, v2, 대조군 산출물
 ```
 
 1. `01` → `02`(보호본) → `02`(대조군 칸으로 D4) → `03` 순서로 실행한다.
